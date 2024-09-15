@@ -1,12 +1,12 @@
 package com.tilapia.bookstore.controllers
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.ninjasquad.springmockk.MockkBean
 import com.tilapia.bookstore.services.BookService
 import com.tilapia.bookstore.testAuthorEntityA
 import com.tilapia.bookstore.testAuthorSummaryDtoA
 import com.tilapia.bookstore.testBookEntityA
 import com.tilapia.bookstore.testBookSummaryDtoA
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.jupiter.api.Test
@@ -172,6 +172,49 @@ class BooksControllerTest @Autowired constructor (
             content { jsonPath("$[0].author.id", equalTo(1)) }
             content { jsonPath("$[0].author.name", equalTo("John Doe")) }
             content { jsonPath("$[0].author.image", equalTo( "author-image.jpeg")) }
+        }
+
+    }
+
+    @Test
+    fun `test that readOneBook returns HTTP 404 when no book found`() {
+        val isbn = "978-089-230342-0777"
+
+        every {
+            bookService.get(any())
+        } answers {
+            null
+        }
+
+        mockMvc.get("/v1/books/$isbn") {
+            contentType = MediaType.APPLICATION_JSON
+            accept = MediaType.APPLICATION_JSON
+        }.andExpect {
+            status{ isNotFound() }
+        }
+    }
+
+    @Test
+    fun `test that readOneBook returns book and HTTP 200 when book found`() {
+        val isbn = "978-089-230342-0777"
+
+        every {
+            bookService.get(isbn)
+        } answers {
+            testBookEntityA(isbn=isbn, testAuthorEntityA(id=1))
+        }
+
+        mockMvc.get("/v1/books/$isbn") {
+            contentType = MediaType.APPLICATION_JSON
+            accept = MediaType.APPLICATION_JSON
+        }.andExpect {
+            status{ isOk() }
+            content { jsonPath("$.isbn", equalTo(isbn)) }
+            content { jsonPath("$.title", equalTo("Test Book A")) }
+            content { jsonPath("$.image", equalTo("book-image.jpeg")) }
+            content { jsonPath("$.author.id", equalTo(1)) }
+            content { jsonPath("$.author.name", equalTo("John Doe")) }
+            content { jsonPath("$.author.image", equalTo( "author-image.jpeg")) }
         }
     }
 }

@@ -1,9 +1,11 @@
 package com.tilapia.bookstore.controllers
 
 import com.tilapia.bookstore.domain.dto.AuthorDto
+import com.tilapia.bookstore.domain.dto.AuthorUpdateRequestDto
 import com.tilapia.bookstore.services.AuthorService
 import com.tilapia.bookstore.toAuthorDto
 import com.tilapia.bookstore.toAuthorEntity
+import com.tilapia.bookstore.toAuthorUpdateRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -45,6 +47,16 @@ class AuthorsController(private val authorService: AuthorService) {
             ResponseEntity(updatedAuthor.toAuthorDto(), HttpStatus.OK)
 
         } catch(ex: IllegalStateException) {
+            ResponseEntity(HttpStatus.BAD_REQUEST)
+        }
+    }
+
+    @PatchMapping(path=["/{id}"])
+    fun partialUpdateAuthor(@PathVariable("id") id: Long, @RequestBody authorUpdateRequest: AuthorUpdateRequestDto): ResponseEntity<AuthorDto> {
+        return try {
+            val updatedAuthor = authorService.partialUpdate(id, authorUpdateRequest.toAuthorUpdateRequest())
+            ResponseEntity(updatedAuthor.toAuthorDto(), HttpStatus.OK)
+        } catch (ex: IllegalStateException) {
             ResponseEntity(HttpStatus.BAD_REQUEST)
         }
     }

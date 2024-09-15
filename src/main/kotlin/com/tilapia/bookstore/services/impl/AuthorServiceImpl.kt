@@ -1,5 +1,6 @@
 package com.tilapia.bookstore.services.impl
 
+import com.tilapia.bookstore.domain.AuthorUpdateRequest
 import com.tilapia.bookstore.domain.entities.AuthorEntity
 import com.tilapia.bookstore.repositories.AuthorRepository
 import com.tilapia.bookstore.services.AuthorService
@@ -28,6 +29,21 @@ class AuthorServiceImpl(private val authorRepository: AuthorRepository): AuthorS
         check(authorRepository.existsById(id))
         val normalisedAuthor = authorEntity.copy(id=id)
         return authorRepository.save(normalisedAuthor)
+    }
+
+    @Transactional
+    override fun partialUpdate(id: Long, authorUpdate: AuthorUpdateRequest): AuthorEntity {
+        val existingAuthor = authorRepository.findByIdOrNull(id)
+        checkNotNull(existingAuthor)
+
+        val updatedAuthor = existingAuthor.copy(
+            name = authorUpdate.name ?: existingAuthor.name,
+            age = authorUpdate.age ?: existingAuthor.age,
+            description = authorUpdate.description ?: existingAuthor.description,
+            image = authorUpdate.image ?: existingAuthor.image
+        )
+
+        return authorRepository.save(updatedAuthor)
     }
 
 

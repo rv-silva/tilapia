@@ -1,12 +1,13 @@
 package com.tilapia.bookstore.controllers
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.ninjasquad.springmockk.MockkBean
+import com.tilapia.bookstore.domain.dto.AuthorUpdateRequestDto
 import com.tilapia.bookstore.domain.entities.AuthorEntity
 import com.tilapia.bookstore.services.AuthorService
 import com.tilapia.bookstore.testAuthorDtoA
 import com.tilapia.bookstore.testAuthorEntityA
 import com.tilapia.bookstore.testAuthorUpdateRequestDtoA
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import io.mockk.verify
 import org.hamcrest.CoreMatchers.equalTo
@@ -241,6 +242,20 @@ class AuthorsControllerTest @Autowired constructor (
             content { jsonPath("$.age", equalTo(30)) }
             content { jsonPath("$.description", equalTo("Some description")) }
             content { jsonPath("$.image", equalTo("author-image.jpeg")) }
+        }
+    }
+
+    @Test
+    fun `test that delete Author returns HTTP 204 on successful delete`() {
+        every {
+            authorService.delete(any())
+        } answers {}
+
+        mockMvc.delete("${AUTHORS_BASE_URL}/999") {
+            contentType = MediaType.APPLICATION_JSON
+            accept = MediaType.APPLICATION_JSON
+        }.andExpect {
+            status { isNoContent() }
         }
     }
 }

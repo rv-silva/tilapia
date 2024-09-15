@@ -26,5 +26,5 @@ data class BookEntity(
 
     @ManyToOne(cascade = [CascadeType.DETACH])
     @JoinColumn(name="author_id")
-    val author: AuthorEntity
+    val authorEntity: AuthorEntity
 )

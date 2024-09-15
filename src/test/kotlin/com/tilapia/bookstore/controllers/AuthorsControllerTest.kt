@@ -1,6 +1,5 @@
 package com.tilapia.bookstore.controllers
 
-import com.tilapia.bookstore.domain.dto.AuthorDto
 import com.tilapia.bookstore.domain.entities.AuthorEntity
 import com.tilapia.bookstore.services.AuthorService
 import com.tilapia.bookstore.testAuthorDtoA
@@ -35,7 +34,7 @@ class AuthorsControllerTest @Autowired constructor (
     @BeforeEach
     fun beforeEach() {
         every {
-            authorService.save(any())
+            authorService.create(any())
         } answers {
             firstArg()
         }
@@ -60,7 +59,7 @@ class AuthorsControllerTest @Autowired constructor (
             description = "Some description"
         )
 
-        verify{ authorService.save(expected) }
+        verify{ authorService.create(expected) }
     }
 
     @Test

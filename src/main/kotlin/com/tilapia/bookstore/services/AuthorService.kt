@@ -15,4 +15,6 @@ interface AuthorService {
 
     fun partialUpdate(id: Long, authorUpdate: AuthorUpdateRequest): AuthorEntity
 
+    fun delete(id: Long)
+
 }

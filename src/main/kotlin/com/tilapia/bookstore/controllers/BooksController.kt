@@ -64,4 +64,9 @@ class BooksController(val bookService: BookService) {
         }
     }
 
+    @DeleteMapping(path = ["/{isbn}"])
+    fun deleteBook(@PathVariable("isbn") isbn: String): ResponseEntity<Unit> {
+        bookService.delete(isbn)
+        return ResponseEntity(HttpStatus.NO_CONTENT)
+    }
 }

@@ -3,10 +3,8 @@ package com.tilapia.bookstore
 import com.tilapia.bookstore.domain.AuthorSummary
 import com.tilapia.bookstore.domain.AuthorUpdateRequest
 import com.tilapia.bookstore.domain.BookSummary
-import com.tilapia.bookstore.domain.dto.AuthorDto
-import com.tilapia.bookstore.domain.dto.AuthorSummaryDto
-import com.tilapia.bookstore.domain.dto.AuthorUpdateRequestDto
-import com.tilapia.bookstore.domain.dto.BookSummaryDto
+import com.tilapia.bookstore.domain.BookUpdateRequest
+import com.tilapia.bookstore.domain.dto.*
 import com.tilapia.bookstore.domain.entities.AuthorEntity
 import com.tilapia.bookstore.domain.entities.BookEntity
 import com.tilapia.bookstore.exceptions.InvalidAuthorException
@@ -72,4 +70,10 @@ fun BookEntity.toBookSummaryDto() = BookSummaryDto(
     description = this.description,
     image = this.image,
     author = authorEntity.toAuthorSummaryDto()
+)
+
+fun BookUpdateRequestDto.toBookUpdateRequest() = BookUpdateRequest(
+    title = this.title,
+    description = this.description,
+    image = this.image
 )

@@ -273,4 +273,19 @@ class BooksControllerTest @Autowired constructor (
         }
     }
 
+    @Test
+    fun `test that deleteBook deletes a book successfully`() {
+        every {
+            bookService.delete(BOOK_A_ISBN)
+        } answers {
+        }
+
+        mockMvc.delete("/v1/books/$BOOK_A_ISBN") {
+            contentType = MediaType.APPLICATION_JSON
+            accept = MediaType.APPLICATION_JSON
+        }.andExpect {
+            status { isNoContent() }
+        }
+    }
+
 }

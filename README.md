@@ -4,6 +4,12 @@
 
 Welcome to the Bookstore Web Application showcase! This project demonstrates a web application built using Kotlin and Spring Boot. It serves as a backend application for managing a bookstore. The system is designed to handle various operations related to books and authors, including listing, updating, adding, and deleting resources.
 
+<br>
+<p align="center">
+  <img src="demo.gif" alt="Video GIF" style="max-width: 100%; height: auto;" />
+</p>
+<br>
+
 ## Features
 
 - **Author Management**: Add, update, list, and delete authors.

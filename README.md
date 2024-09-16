@@ -19,6 +19,13 @@ Welcome to the Bookstore Web Application showcase! This project demonstrates a w
 
 To get started with the Bookstore Web Application, follow these steps:
 
+### Pre requisites
+
+- [How to Install Java (OpenJDK - Eclipse)](https://adoptium.net/en-GB/installation/)
+- [How to Install IntelliJ IDEA](https://www.jetbrains.com/idea/download/)
+- [How to install NodeJS](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs)
+- [How to install Docker](https://docs.docker.com/get-docker/)
+
 ### Installation
 
 1. Clone the repository:
